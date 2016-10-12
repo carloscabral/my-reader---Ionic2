@@ -7,7 +7,11 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let feed of feeds">
-      {{feed.data.title}}
+      <ion-thumbnail item-left>
+        <img [src]="feed.data.thumbnail">
+      </ion-thumbnail>
+      <h2>{{feed.data.title}}</h2>
+      <p>{{feed.data.domain}}</p>
     </ion-item>
   </ion-list>
 </ion-content>

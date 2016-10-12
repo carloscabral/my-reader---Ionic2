@@ -17,6 +17,7 @@ export class HomePage {
     this.http.get(this.url).map(res => res.json())
       .subscribe(data => {
         this.feeds = data.data.children;
+        console.log(this.feeds);
       }); 
   }
 
