@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let feed of feeds">
+    <ion-item *ngFor="let feed of feeds" (click)="itemSelected(feed)">
       <ion-thumbnail item-left>
         <img [src]="feed.data.thumbnail">
       </ion-thumbnail>
