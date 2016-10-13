@@ -6,12 +6,12 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let feed of feeds" (click)="itemSelected(feed)">
+    <button ion-item *ngFor="let feed of feeds" (click)="itemSelected(feed.data.url)">
       <ion-thumbnail item-left>
         <img [src]="feed.data.thumbnail">
       </ion-thumbnail>
       <h2>{{feed.data.title}}</h2>
       <p>{{feed.data.domain}}</p>
-    </ion-item>
+    </button>
   </ion-list>
 </ion-content>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { InAppBrowser } from 'ionic-native';
 
 @Component({
   selector: 'page-home',
@@ -28,12 +29,19 @@ export class HomePage {
     this.http.get(this.url).map(res => res.json())
       .subscribe(data => {
         this.feeds = data.data.children;
+
+        this.feeds.forEach((e, i, a) => {
+          if (!e.data.thumbnail || e.data.thumbnail.indexOf('b.thumbs.redditmedia.com') === -1 ) {  
+            e.data.thumbnail = 'http://www.redditstatic.com/icon.png';
+          }
+        })
+                
         loading.dismiss();
       });  
   }
 
-  itemSelected (feed):void {
-    alert(feed.data.url);
+  itemSelected (url: string):void {
+    let browser = new InAppBrowser(url, '_system');
   }       
 
 }
