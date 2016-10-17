@@ -1,6 +1,12 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>My Feed Reader</ion-title>
+    <ion-title>
+      <ion-searchbar 
+        [(ngModel)]="searchTerm"
+        (ionInput)="filterItems()" 
+        placeholder="Type here..." >
+      </ion-searchbar>
+    </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="showFilters()">
         <ion-icon name="funnel" [style.color]="hasFilter ? 'orange' : 'inherit'"></ion-icon>
