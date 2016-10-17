@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
-import { NavController, LoadingController, ActionSheetController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, LoadingController, ActionSheetController, Content } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
 import { RedditService } from '../../providers/reddit-service';
+import { FormControl } from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+  @ViewChild(Content) content: Content;
 
   public feeds: Array<any>;
   private url: string = "https://www.reddit.com/new.json";
@@ -18,10 +23,18 @@ export class HomePage {
   public noFilter: Array<any>;
 
   public searchTerm: string = '';
+  public searchTermControl: FormControl;
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public actionSheetCtrl: ActionSheetController, public redditService: RedditService) {
 
     this.fetchContent();
+
+    this.searchTermControl = new FormControl();
+    this.searchTermControl.valueChanges.debounceTime(1000).distinctUntilChanged().subscribe(search => {
+      if (search !== '' && search) {
+        this.filterItems();
+      }
+    })    
 
   }
 
@@ -77,6 +90,8 @@ export class HomePage {
   } 
   
   showFilters() :void {
+
+    this.content.scrollToTop();
 
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Filter options:',
